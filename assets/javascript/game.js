@@ -13,27 +13,28 @@ window.onload = function() {
             this.currentWord = this.wordBank[index].toLowerCase();
             console.log(this.currentWord);
             return this.currentWord;
+        },
+
+        wordRender: function() {
+            var wordSpace = "";
+            for (i = 0; i < game.currentWord.length; i++) {
+                if (game.lettGuessed.indexOf(game.currentWord[i]) !== -1) {
+                    wordSpace += game.currentWord[i];
+                } else {
+                    wordSpace += " _";
+                }
+            }
+            console.log(wordSpace);
+            document.querySelector("#currWord").innerHTML = wordSpace;
         }
     };
 
     /*Calling Functions and event listeners below this line*/
 
-
+    // call this function to generate random word
     game.wordPicked();
-    check();
-    // add check function to object
-    function check() {
-        var wordSpace = "";
-        for (i = 0; i < game.currentWord.length; i++) {
-            if (game.lettGuessed.indexOf(game.currentWord[i]) !== -1) {
-                wordSpace += game.currentWord[i];
-            } else {
-                wordSpace += " _";
-            }
-        }
-        console.log(wordSpace);
-        document.querySelector("#currWord").innerHTML = wordSpace;
-    }
+    // call this function to generate empty spaces for the word selected
+    game.wordRender();
 
     document.onkeypress = function(event) {
         game.press = event.key;
@@ -47,7 +48,8 @@ window.onload = function() {
         // display letters guessed within HTML 
         document.querySelector("#lettersGuessed").innerHTML = game.lettGuessed;
         console.log(game.press);
-        check();
+        // call this function again after onkeypress to see if keys match the word
+        game.wordRender();
     }
 
 
