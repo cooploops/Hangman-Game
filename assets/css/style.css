@@ -28,7 +28,7 @@ body {
 .jumbotron {
 	background-image: url("../images/meseeks.png");
 	background-size: cover;
-	border: 2px solid black;
+	border: 4px solid black;
 }
 
 .transbox {
@@ -43,6 +43,14 @@ body {
 
 /*main content area css*/
 
+main {
+	border: 2.5px solid black;
+}
+
+main h3 {
+	color: lightskyblue;
+}
+
 .hangmanArea {
 	border: 2px solid black;
 	background-color:white;
@@ -55,4 +63,14 @@ body {
 .wordArea {
 	border: 2px solid black;
 	background-color:white;
+}
+
+.meBox {
+	box-sizing: border-box;
+}
+
+/* Footer */
+footer {
+	position:relative;
+	z-index:2;
 }

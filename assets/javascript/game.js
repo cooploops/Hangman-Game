@@ -6,19 +6,21 @@ window.onload = function() {
         lettGuessed: [],
         correctGuesses: 0,
         guessesLeft: 10,
-        wordBank: ["PickleRick", "MrPoopyButtHole", "Morty", "Summer", "Beth", "BirdPerson"],
+        wordBank: ["PickleRick", "MrPoopyButtHole", "Morty", "Summer", "Beth", "BirdPerson","MeeSeeks","snowball","Jerry","BlitznChitz"],
         currentWord: "",
         press: "",
-        // Randomly pick word from wordBank and store it in currentWord property of game object
+        wins: 0,
+
+        // Randomly pick word from wordBank and store it in currentWord property of game object; remove this word from the array after so as to not repeat
         wordPicked: function() {
             var index = Math.floor(Math.random() * this.wordBank.length);
             this.currentWord = this.wordBank[index].toLowerCase();
             console.log(this.currentWord);
-            return this.currentWord;
+            this.wordBank.splice(index,1);
         },
-
+        // talley up correct and incorrect guesses to display guesses left; condition for loss stated here.
         tallyGuesses: function () {
-            if(this.state && this.guessesLeft > 0){
+            if(this.state === true && this.guessesLeft > 0){
                 // count correct guesses
                 if(this.currentWord.indexOf(this.press) !== -1) {
                     this.correctGuesses++;
@@ -27,12 +29,13 @@ window.onload = function() {
                     this.guessesLeft--;
                     document.querySelector("#guessesLeft").innerHTML = this.guessesLeft;
                 }
-            } else if (this.state && this.guessesLeft === 0){
+            } else if (this.state === true && this.guessesLeft <= 0){
                 alert("you lose, try again");
                 this.state = false;
+                this.reset();
             }
         },
-
+        // generate word dynamically through looping and also display condition for winning.
         wordRender: function() {
             var wordSpace = "";
             for (i = 0; i < this.currentWord.length; i++) {
@@ -47,11 +50,27 @@ window.onload = function() {
                 this.tallyGuesses();
             } else if (wordSpace === this.currentWord) {
                 this.state = false;
+                this.wins++;
                 alert("you win!");
+                this.reset();
             }
             console.log(wordSpace);
             document.querySelector("#currWord").innerHTML = wordSpace;
+            document.querySelector("#wins").innerHTML = this.wins;
+        },
+        // reset game stats so that player can play again.
+        reset: function() {
+            this.state = true;
+            this.guessesLeft = 10;
+            this.lettGuessed = [];
+            this.currentWord = "";
+            this.press = "";
+            this.correctGuesses = 0;
+            this.wordPicked();
+            this.wordRender();
         }
+            
+
 
     };
 
@@ -80,7 +99,15 @@ window.onload = function() {
         console.log(game.press);
         // see if keys match the word
         game.wordRender();
-    }
+    };
+    // create audio files
+    var canDoAudio = document.createElement("audio");
+    canDoAudio.setAttribute("src","assets/sounds/canDo.mp3")
 
-
+    // click the meeseeks box to execute a reset to play another round and play audio
+    $(".meBox").click(function(){
+        canDoAudio.play();
+        game.reset();
+    })
 }
+
