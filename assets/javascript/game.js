@@ -1,5 +1,13 @@
 //wait to run game script till everything is loaded and in place on screen
 window.onload = function() {
+    // create audio files
+    var canDoAudio = document.createElement("audio");
+    canDoAudio.setAttribute("src","assets/sounds/canDo.mp3")
+
+    var meeSeeksAudio = document.createElement("audio");
+    meeSeeksAudio.setAttribute("src","assets/sounds/mr_meeseeks.mp3")
+
+    meeSeeksAudio.play();
     // create object to store different properties and functions I need
     var game = {
         state: true,
@@ -100,9 +108,6 @@ window.onload = function() {
         // see if keys match the word
         game.wordRender();
     };
-    // create audio files
-    var canDoAudio = document.createElement("audio");
-    canDoAudio.setAttribute("src","assets/sounds/canDo.mp3")
 
     // click the meeseeks box to execute a reset to play another round and play audio
     $(".meBox").click(function(){
